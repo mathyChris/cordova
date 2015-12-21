@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ko" data-ng-app="myApp">
+<head>
+<meta charset="utf-8">
+
+<title>angular</title>
+<meta name="description" content="">
+<meta name="author" content="java">
+<meta name="viewport" content="width=device-width; initial-scale=1.0">
+
+<link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css"/>
+
+<script type="text/javascript" src="node_modules/jquery/dist/jquery.js"></script>
+<script type="text/javascript" src="node_modules/angular/angular.js"></script>
+
+<script type="text/javascript" src="cordova.js"></script>
+
+<style type="text/css" media="screen">
+
+	.xxx{
+		
+		
+		transition : 2s; 
+		transition-delay: 2s; 
+		
+	}
+	
+</style>
+
+
+
+<style> 
+
+ .yyy {
+    width: 400px;
+    height: 100px;
+    background: ffdead;
+    position: relative;
+    
+    -webkit-animation: mymove 5s infinite; /* Chrome, Safari, Opera */
+    -webkit-animation-delay: 2s; /* Chrome, Safari, Opera */
+    animation: mymove 5s infinite;
+    animation-delay: 2s;
+}
+
+/* Chrome, Safari, Opera */
+@-webkit-keyframes mymove {
+    from {left: 0px;}
+    to {left: 200px;}
+}
+
+@keyframes mymove {
+    from {left: 0px;}
+    to {left: 200px;}
+}
+
+</style>
+
+
+
+<script type="text/javascript">
+	var app = angular.module("myApp", []);
+	
+	app.controller("mainController", function($scope) {
+		
+		$scope.ready = "device loading...";
+		
+		$(document).on("deviceready", function() { // jquery 의 문법 
+			
+			$scope.ready = "device ready...";
+			$scope.$apply(); // 
+			
+		});
+		
+		$scope.index = 0;
+		$scope.size = "400x400";
+		
+		
+		$scope.leftClick = function() {
+			
+			navigator.vibrate(200);
+			
+			$scope.index -= 1;
+			
+			if ($scope.index < 0)
+				$scope.index = 0;
+			
+			$scope.size = "400x40" + $scope.index;
+			
+		};
+		
+		$scope.rightClick = function() {
+			
+			navigator.vibrate(200);
+			
+			$scope.index += 1;
+			
+			if ($scope.index > 9)
+				$scope.index = 9;
+			
+			$scope.size = "400x40" + $scope.index;
+			
+		};
+		
+		
+		$scope.clear = function(){
+			
+			navigator.vibrate(500); 
+			
+			$scope.size = "400x400" ;
+			
+		}; 
+		
+	});
+
+
+</script>
+</head>
+
+<body data-ng-controller="mainController" class="container">
+	
+  <div class="panel panel-primary">
+  	
+    <header class="panel-heading">
+    	
+    <div class="yyy">	
+      <h1>{{ready}}</h1>
+    </div> 
+      
+    </header>
+    
+    <div class="panel-body">
+    	
+	    <button data-ng-click="leftClick()" class="btn btn-success">left</button>
+	    <button data-ng-click="rightClick()" class="btn btn-info">right</button>
+	    <button data-ng-click="clear()" class="btn btn-primary">clear</button>
+	    
+	    <hr>
+	    
+    	<img class="img-responsive" 
+    		 alt="{{size}}" 
+    		 data-ng-src="http://www.placehold.it/{{size}}">
+    		 
+    </div>
+    
+    <footer class="panel-footer">
+     <p>&copy; Copyright  by java</p>
+    </footer>
+    
+  </div>
+  
+</body>
+
+</html>
+
+
+
+
+
+
